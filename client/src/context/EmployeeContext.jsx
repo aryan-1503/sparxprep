@@ -1,6 +1,9 @@
 import React, {createContext} from 'react';
 
 const EmployeeContext = createContext({
+    /*
+        Creating context for employee data
+    */
     isOpen: false,
     setIsOpen: () => {},
     editOpen: false,

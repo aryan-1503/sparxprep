@@ -1,13 +1,20 @@
 import {EmployeeModel} from "../models/employee.model.js";
 
 const createEmployeePost = async (req,res) => {
+    /*
+        Function to create new employee
+        REQ BODY : { PostId, Name, Email, Body }
+        RETURNS : Creates a new employee entry
+    */
     const { postId, name, email, body } = req.body;
     try{
+        // finding the employee in db to check if it already exists
         const employee = await EmployeeModel.findOne({ email });
         if(employee) {
             return res.status(406).json({ success: false,message: "Employee already exists"})
         }
 
+        // creating and saving the new employee in db
         const newEmployee = new EmployeeModel({ postId, name, email, body })
         const savedEmployee = await newEmployee.save();
         return res.status(200).json({ success: true, message: "Employee added" })
@@ -18,6 +25,10 @@ const createEmployeePost = async (req,res) => {
 }
 
 const getAllEmployeePosts = async (req,res) => {
+    /*
+        Function to retrieve all employee entries
+        RETURNS : All employee present in the database
+    */
     try{
         const employees = await EmployeeModel.find();
         if(!employees) {
@@ -31,6 +42,11 @@ const getAllEmployeePosts = async (req,res) => {
 }
 
 const getSingleEmployeePost = async (req,res) => {
+    /*
+        Function to get single employee
+        REQUEST PARAMS: employee ID
+        RETURNS : Single employee entry
+    */
     const { id } = req.params;
     try{
         const employee = await EmployeeModel.findById(id);
@@ -44,6 +60,11 @@ const getSingleEmployeePost = async (req,res) => {
 }
 
 const getPostByName = async (req,res) => {
+    /*
+        Function to get single employee
+        REQUEST PARAMS: employee Name
+        RETURNS : Single employee entry
+    */
     const { name } = req.params;
     try{
         const employee = await EmployeeModel.findOne({ title: name});
@@ -57,6 +78,11 @@ const getPostByName = async (req,res) => {
 }
 
 const updateEmployee = async (req,res) => {
+    /*
+        Function to get single employee
+        REQUEST PARAMS: employee ID
+        RETURNS : Updates the employee data
+    */
     const { id } = req.params;
     try{
         const employee = await EmployeeModel.findByIdAndUpdate(id,{...req.body},{ new: true});
@@ -67,6 +93,11 @@ const updateEmployee = async (req,res) => {
 }
 
 const deleteEmployee = async (req,res) => {
+    /*
+        Function to get single employee
+        REQUEST PARAMS: employee ID
+        RETURNS : Deletes the employee
+    */
     const {
         params: { id }
     } = req

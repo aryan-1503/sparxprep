@@ -13,6 +13,7 @@ const AddEmployeeCard = () => {
 
 
     const handleChange = (e) => {
+        // Handles form data change
         const { name, value } = e.target;
         setFormData({
             ...formData,
@@ -27,7 +28,7 @@ const AddEmployeeCard = () => {
         console.log(formData)
         try{
             const res = await api.post("employee/create",formData);
-            console.log(res.data)
+            // console.log(res.data)
             alert(res.data.message)
             window.location.reload()
         }catch (e) {

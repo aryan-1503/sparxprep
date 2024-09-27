@@ -26,7 +26,6 @@ app.use(cookieParser(process.env.SECRET,{
 
 
 //Routers
-
 app.use("/api/v1/employee", employeeRouter)
 
 app.get("/", (req, res) => {
